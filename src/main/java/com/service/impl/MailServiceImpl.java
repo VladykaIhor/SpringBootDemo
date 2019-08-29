@@ -1,6 +1,8 @@
 package com.service.impl;
 
 import com.service.MailService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -17,6 +19,8 @@ import java.util.Properties;
 
 @Service
 public class MailServiceImpl implements MailService {
+
+    private static final Logger logger = LoggerFactory.getLogger(MailServiceImpl.class);
 
     @Transactional
     @Override
@@ -41,8 +45,8 @@ public class MailServiceImpl implements MailService {
             message.setSubject("Testing Gmail TLS");
             Transport.send(message);
             message.setText("Dear User, your order confirmation code is:  " + code);
-        } catch (AddressException e) {
         } catch (MessagingException e) {
+            logger.error("Error happened while sending a code");
         }
     }
 }

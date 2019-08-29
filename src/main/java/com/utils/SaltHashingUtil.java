@@ -1,11 +1,14 @@
 package com.utils;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
 
 public class SaltHashingUtil {
-    //private static final Logger logger = Logger.getLogger(SaltHashingUtil.class);
+    private static final Logger logger = LoggerFactory.getLogger(SaltHashingUtil.class);
 
     public static byte[] getSalt() {
         SecureRandom random = new SecureRandom();
@@ -24,7 +27,7 @@ public class SaltHashingUtil {
                 hashPassword.append(String.format("%02x", b));
             }
         } catch (NoSuchAlgorithmException e) {
-          //  logger.error("Can't find algorithm for hashing", e);
+            logger.error("Can't find algorithm for hashing", e);
         }
         return hashPassword.toString();
     }

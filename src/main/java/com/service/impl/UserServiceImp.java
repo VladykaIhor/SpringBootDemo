@@ -14,7 +14,6 @@ import java.util.Optional;
 @Service
 public class UserServiceImp implements UserService {
 
-
     private final UserJpaRepository userJpaRepository;
 
     @Autowired
@@ -22,10 +21,10 @@ public class UserServiceImp implements UserService {
         this.userJpaRepository = userJpaRepository;
     }
 
-
     @Transactional
     @Override
     public void add(User user) {
+        user.setPassword(SaltHashingUtil.saltAndHashPassword(user.getPassword(), user.getSalt()));
         userJpaRepository.save(user);
     }
 

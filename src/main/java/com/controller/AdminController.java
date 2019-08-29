@@ -52,7 +52,7 @@ public class AdminController {
         model.addAttribute("id", id);
         model.addAttribute("login", userService.getUserById(id).get().getLogin());
         model.addAttribute("password", userService.getUserById(id).get().getPassword());
-        return "redirect:/user";
+        return "redirect:/change_user";
     }
 
 }
