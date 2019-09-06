@@ -1,8 +1,10 @@
 package com.entity;
 
+import com.utils.SaltHashingUtil;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -56,6 +58,7 @@ public class User implements UserDetails {
         this.email = email;
         this.password = password;
         this.role = role;
+        this.salt = getSalt();
     }
 
     public void setSalt(byte[] salt) {
@@ -151,7 +154,7 @@ public class User implements UserDetails {
     }
 
     public byte[] getSalt() {
-        return salt;
+        return SaltHashingUtil.getSalt();
     }
 
     @Override

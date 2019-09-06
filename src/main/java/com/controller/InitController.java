@@ -1,10 +1,15 @@
 package com.controller;
 
+import com.entity.Product;
 import com.entity.User;
 import com.service.ProductService;
 import com.service.UserService;
+import com.utils.SaltHashingUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.parameters.P;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 
@@ -28,10 +33,16 @@ public class InitController {
     @GetMapping("/")
     public String login(@AuthenticationPrincipal User user) {
         if (Objects.isNull(user)) {
+            User test = new User("test", "test@test", "test", "ROLE_ADMIN");
+            User user1 = new User("user", "yngwar95@gmail.com", "user", "ROLE_USER");
+            userService.add(test);
+            userService.add(user1);
             return "redirect:/login";
         } else if ("ROLE_ADMIN".equals(user.getRole())) {
             return "redirect:/admin/users";
         } else {
+            productService.add(new Product("Guitar Pick", "1.25 mm", 33113.0));
+            productService.add(new Product("Strings", "10-52", 100000.0));
             return "redirect:/user/products";
         }
     }

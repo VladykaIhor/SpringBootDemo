@@ -9,13 +9,13 @@ import java.util.Optional;
 
 public interface CartService {
 
-    void addProductToCart(User user, Product product);
+    void addProductToCart(Cart cart, Product product);
 
-    List<Product> getCartProducts();
+    List<Product> getCartProducts(Cart cart);
 
-    void createCart(Cart cart);
+    Cart createCart();
 
-    Optional<Cart> getCartByUser(User user);
+    Optional<Cart> getLastCartByUser(User user);
 
     int getSizeOfACart(Cart cart);
 

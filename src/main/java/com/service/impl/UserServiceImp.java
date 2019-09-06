@@ -5,6 +5,7 @@ import com.repository.UserJpaRepository;
 import com.service.UserService;
 import com.utils.SaltHashingUtil;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -15,6 +16,7 @@ import java.util.Optional;
 public class UserServiceImp implements UserService {
 
     private final UserJpaRepository userJpaRepository;
+    private static final BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
 
     @Autowired
     public UserServiceImp(UserJpaRepository userJpaRepository) {
@@ -24,7 +26,7 @@ public class UserServiceImp implements UserService {
     @Transactional
     @Override
     public void add(User user) {
-        user.setPassword(SaltHashingUtil.saltAndHashPassword(user.getPassword(), user.getSalt()));
+        user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
         userJpaRepository.save(user);
     }
 

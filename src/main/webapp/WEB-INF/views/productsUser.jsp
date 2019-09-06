@@ -3,44 +3,59 @@
 <html>
 <head>
     <title>Products</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
 </head>
+<style>
+    .container {
+        height: 5vh;
+        width: 100%;
+        text-align: center;
+        border-radius: 10px;
+        margin: 0px auto;
+        float: none;
+    }
+    .container form {
+        padding: auto;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+</style>
 <body>
-<div style="text-align: center; background-color: aqua">
-    <a href="index.jsp">Home </a>
-    <center>
-        <br>
-        <form action="/signout" method="post">
-            <button type="submit">Logout</button>
-        </form>
-        <table border="1">
-            <tr>
-                <th>Name</th>
-                <th>Description</th>
-                <th>Price</th>
-            </tr>
-            Items in shopping cart : ${count}
-            <br>
-            <c:forEach var="products" items="${products}">
-            <tr>
-                <td>${products.name}</td>
-                <td>${products.description}</td>
-                <td>${products.price}</td>
-                <td>
-                    <form action="/user/products/add_to_cart" method="post">
-                        <input type="hidden" name="id" value="${products.id}">
-                        <button type="submit">To Cart</button>
-                    </form>
-                </td>
-            </tr>
-            </c:forEach>
-            <br>
-            <form action="/user/orderConfirmation" method="post">
-                <button type="submit">Confirm Order</button>
-            </form>
-    </center>
-</div>
-<div>
-
+<form class="" action="/signout" method="post">
+    <button class="btn btn-dark" type="submit">Logout</button>
+</form>
+<div class="container">
+    <table class="table table-sm">
+        <thead>
+        <tr>
+            <th class="container">Name</th>
+            <th class="container">Description</th>
+            <th class="container">Price</th>
+        </tr>
+        </thead>
+        <c:forEach var="products" items="${products}">
+        <tbody>
+        <tr>
+            <td align="center">${products.name}</td>
+            <td align="center">${products.description}</td>
+            <td align="center">${products.price}</td>
+            <td align="center">
+                <form action="/user/products/add_to_cart" method="post">
+                    <input type="hidden" name="id" value="${products.id}">
+                    <button class="list-group-item list-group-item-action" type="submit">To Cart</button>
+                </form>
+            </td>
+        </tr>
+        </c:forEach>
+        </tbody>
+    </table>
+    <br>
+    <form action="/user/orderConfirmation" method="post">
+        <button class="btn btn-success" type="submit">Confirm Order</button>
+    </form>
+    Items in shopping cart : ${count}
 </div>
 </body>
 </html>

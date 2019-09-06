@@ -4,11 +4,10 @@
 <head>
     <title>Authorization page</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
-
 </head>
 <style>
     .container {
-        height: 100vh;
+        height: 35vh;
         width: 100%;
         display: flex;
         justify-content: center;
@@ -22,6 +21,7 @@
         justify-content: center;
         align-items: center;
     }
+
     .container button {
         margin-top: 10px;
     }
@@ -31,7 +31,10 @@
     }
 </style>
 <body>
-
+<div class="jumbotron">
+    <h1 class="display-4">Hello, world!</h1>
+    <p class="lead">This is a simple online shop</p>
+</div>
 <div class="container">
     <form action="<spring:url value="/signin"/>" method="post">
         <label for="login"> Login </label>
@@ -41,6 +44,5 @@
         <button type="submit" class="btn btn-success">Sign In</button>
     </form>
 </div>
-
 </body>
 </html>

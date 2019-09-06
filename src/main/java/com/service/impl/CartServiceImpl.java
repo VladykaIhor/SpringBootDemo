@@ -7,6 +7,7 @@ import com.repository.CartJpaRepository;
 import com.service.CartService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
@@ -21,27 +22,35 @@ public class CartServiceImpl implements CartService {
         this.cartJpaRepository = cartJpaRepository;
     }
 
+    @Transactional
     @Override
-    public void addProductToCart(User user, Product product) {
-        Optional<Cart> cart = getCartByUser(user);
-        cart.get().setProducts(product);
+    public Cart createCart() {
+        Cart cart = new Cart();
+        cartJpaRepository.saveAndFlush(cart);
+
+        return cart;
     }
 
+    @Transactional
     @Override
-    public List<Product> getCartProducts() {
-        return null;
-    }
-
-    @Override
-    public void createCart(Cart cart) {
+    public void addProductToCart(Cart cart, Product product) {
+        cart.setProducts(product);
         cartJpaRepository.saveAndFlush(cart);
     }
 
+    @Transactional
     @Override
-    public Optional<Cart> getCartByUser(User user) {
-        return cartJpaRepository.getCartByUser(user);
+    public List<Product> getCartProducts(Cart cart) {
+        return cart.getProducts();
     }
 
+    @Transactional
+    @Override
+    public Optional<Cart> getLastCartByUser(User user) {
+        return cartJpaRepository.findFirstByUserOrderByIdDesc(user);
+    }
+
+    @Transactional
     @Override
     public int getSizeOfACart(Cart cart) {
         return cart.getSizeOfCart();

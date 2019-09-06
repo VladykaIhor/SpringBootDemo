@@ -25,6 +25,7 @@ public class Cart {
     private Long id;
 
     @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "user_id")
     private User user;
 
     @ManyToMany(fetch = FetchType.EAGER, cascade = {CascadeType.PERSIST})
